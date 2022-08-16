@@ -1,5 +1,5 @@
 ## Git Clone
-git clone https://github.com/FSDotNetDev/codestar.git
+git clone https://github.com/natthasath/react-codestar.git
 
 ## Installation Package
 ```bash
