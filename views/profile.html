@@ -1,0 +1,13 @@
+<% include header.html %>
+<h3>Hello <%=user.name%></h3>
+<hr>
+<h3>Setting</h3>
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="text" name="user" value="<%=user.name%>" class="form-control">
+    <% if (user.picture != null) { %>
+        <img src="<%= user.picture %>" class="img-responsive">
+    <% } %>
+    <input type="file" name="picture" class="btn btn-default">
+    <button type="submit" class="btn btn-info">Update</button>
+</form>
+<% include footer.html %>

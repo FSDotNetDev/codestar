@@ -1,0 +1,31 @@
+{
+  "name": "seed",
+  "version": "1.0.0",
+  "description": "sample project",
+  "main": "app.js",
+  "dependencies": {
+    "crypto": "^0.0.3",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "fs": "^0.0.2",
+    "install": "^0.8.1",
+    "mongodb": "^2.2.5",
+    "multer": "^1.2.0",
+    "npm": "^3.10.6",
+    "socket.io": "*"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codestar-work/seed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codestar-work/seed/issues"
+  },
+  "homepage": "https://github.com/codestar-work/seed#readme"
+}

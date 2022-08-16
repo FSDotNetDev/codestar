@@ -1,0 +1,83 @@
+<% include header.html %>
+
+<style>
+	form {
+		max-width: 100%;
+		padding: 10px;
+	}
+	#log {
+		border: 1px solid dodgerblue;
+		border-radius: 4px;
+		padding: 4px;
+		background: #eef;
+	}
+</style>
+
+<form action='javascript:send()'>
+	<div id="log"></div>
+	<!--<textarea class='form-control' id='history'></textarea>-->
+	<input class='form-control' id='message' placeholder='Type Message Here' autofocus>
+	<button type='submit' class='btn btn-primary'>Send</button>
+	<a href="javascript:clear()" class="btn btn-default">Clear Log</a>
+	<a href="javascript:shareLocation()" class="btn btn-default">Share Location</a>
+</form>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+<script src='/socket.io/socket.io.js'></script>
+<script>
+	var socket = io.connect('/')
+	socket.send({email: '<%= user.email %>'})
+	socket.send({action: 'email', value: '<%= user.email %>'})
+	socket.on('message', m => {
+		var t = $('#log').html()
+		t += m + '<br>'
+		$('#log').html(t)
+		// var s = $('#history').val()
+		// s += m + '\n'
+		// $('#history').val(s)
+	})
+	function send() {
+		var s = $('#message').val()
+		$('#message').val('')
+		socket.send({action: 'chat', value:s})
+	}
+	function clear() {
+		$('#log').html('')
+	}
+	function shareLocation() {
+		navigator.geolocation.getCurrentPosition(positionSuccess, positionError, { enablehighpositionAccuracy: true })
+	}
+	function positionSuccess(p) {
+		var s = "Location: " +
+		p.coords.latitude + ", " +
+		p.coords.longitude
+		var a = "<a href='https://google.com" +
+		"/maps/@" + p.coords.latitude + ',' +
+		p.coords.longitude + ",15z' target='_blank'>"
+		+ s + "</a>"
+		console.log(a)
+		socket.send({action:'chat', value:a})
+	}
+	function positionError(e) {
+		console.log(e);
+	}
+
+	var r = new webkitSpeechRecognition();
+	r.lang = 'th'
+	r.onresult = function (e) {
+		var s = e.results[0][0].transcript
+		socket.send({action: 'chat', value:s})
+	}
+	$('#message').keydown( e => {
+		if (e.which == 16) {
+			r.start()
+		}
+	})
+	$('#message').keyup( e => {
+		if (e.which == 16) {
+			r.stop()
+		}
+	})
+</script>
+
+<% include footer.html %>
